@@ -4,11 +4,7 @@ function pageLoad() {
 
 }
 
-class Form {
-    constructor() {
-        CreateFormElement()
-    }
-}
+
 
 class ToDoObject {
     constructor(formTitle, formDetails, formDueDate, formChecked, formProjectType) {
@@ -32,6 +28,18 @@ class ToDoObject {
 
 }
 
+class Form {
+    constructor() {
+        CreateFormElement()
+    }
+    delete() {
+        deleteFormObj()
+    }
+}
+
+
+//creates new entry and appends it to the list area
+//input values are passed from form input values
 function CreateToDoElement(objTitle, objDetails, objDueDate, objChecked, objProjectType) {
     const newToDo = document.createElement('div');
     newToDo.classList.add('to-do-element');
@@ -59,10 +67,12 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objChecked, objProj
 
     const editBtn = document.createElement('button')
     editBtn.classList.add('editBtn')
+    editBtn.textContent = 'Edit'
     newToDo.appendChild(editBtn)
 
     const delBtn = document.createElement('button')
     delBtn.classList.add('delBtn')
+    delBtn.textContent = 'Delete'
     newToDo.appendChild(delBtn)
 
     const contentArea = document.querySelector('.main-area');
@@ -70,6 +80,8 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objChecked, objProj
 
 }
 
+//creates entry input window and blurs background
+//input values are passed to a new to-do object when submit is clicked
 function CreateFormElement() {
     const newForm = document.createElement('div')
     newForm.classList.add('form-element')
@@ -89,9 +101,15 @@ function CreateFormElement() {
 
     const submit = document.createElement('button')
     submit.classList.add('form-submit')
+    submit.textContent = 'Submit'
     newForm.appendChild(submit)
     submit.addEventListener('click', Submit)
 
+    const delBtn = document.createElement('button')
+    delBtn.classList.add('delBtn')
+    delBtn.textContent = 'Delete'
+    delBtn.addEventListener('click', deleteFormObj)
+    newForm.appendChild(delBtn)
 
 
     const newFormBackground = document.createElement('div')
@@ -103,6 +121,7 @@ function CreateFormElement() {
     page.appendChild(newFormBackground)
 }
 
+//submit button on new entry form object
 function Submit() {
     const formTitle = document.querySelector('.form-title')
     const formDetails = document.querySelector('.form-details')
@@ -111,7 +130,12 @@ function Submit() {
     const newToDoObj = new ToDoObject(formTitle.value, formDetails.value, formDate.value)
 }
 
-
+function deleteFormObj() {
+    const form = document.querySelector('.form-element')
+    const formBackground = document.querySelector('.form-background-overlay')
+    form.remove()
+    formBackground.remove()
+}
 
 
 
