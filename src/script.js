@@ -13,8 +13,8 @@ class ToDoObject {
     }
     static editEntry(entryID) {
         const entryData = getIndexOfID(entryID)
-        
-        const newEditForm = new EditForm(entryData.title, entryData.details, entryData.dueDate, entryData.checked, entryData.projectType, entryID)
+        console.log(entryID)
+        const newEditForm = new EditForm(entryData.title, entryData.details, entryData.dueDate, entryData.checked, entryData.projectType, entryData.ID)
     }
 
     static delete() {
@@ -48,18 +48,16 @@ class Form {
     }
 }
 
-class EditForm extends Form {
+class EditForm {
     constructor(title, details, dueDate, checked, projectType, entryID) {
-        // this.entryID = entryID
-        CreateEditForm(title, details, dueDate, checked, projectType)
+        this.entryID = entryID
+        CreateEditForm(title, details, dueDate, checked, projectType, entryID)
     }
-    static Confirm() {
-        const formTitle = document.querySelector('.form-title')
-        const formDetails = document.querySelector('.form-details')
-        const formDate = document.querySelector('.form-date')
-
-        // const updateTitle = document.getElementById(entryID).getElementsByClassName('to-do-title')
-        // updateTitle.textContent = formTitle.value;
+    Confirm(id) {
+        console.log(id)
+        UpdateEntryFields(id)
+        Form.delete()
+        Form.delete()
     }
 }
 
@@ -161,7 +159,7 @@ function getIndexOfID(entryID) {
     return library[idIndex];
 }
 
-function CreateEditForm(objTitle, objDetails, objDueDate, objChecked, objProjectType) {
+function CreateEditForm(objTitle, objDetails, objDueDate, objChecked, objProjectType, entryID) {
     const newForm = document.createElement('div')
     newForm.classList.add('form-element')
 
@@ -186,7 +184,11 @@ function CreateEditForm(objTitle, objDetails, objDueDate, objChecked, objProject
     confirm.classList.add('form-confirm')
     confirm.textContent = 'Confirm'
     newForm.appendChild(confirm)
-    confirm.addEventListener('click', EditForm.Confirm())                     //unfinished
+    confirm.addEventListener('click', () => {
+        const newEditForm = new EditForm;
+        newEditForm.Confirm(entryID)
+        
+    })                     //unfinished
 
     const delBtn = document.createElement('button')
     delBtn.classList.add('delBtn')
@@ -202,6 +204,16 @@ function CreateEditForm(objTitle, objDetails, objDueDate, objChecked, objProject
     const page = document.querySelector('html')
     page.appendChild(newForm)
     page.appendChild(newFormBackground)
+}
+
+function UpdateEntryFields(entryID) {
+    const formTitle = document.querySelector('.form-title')
+    const formDetails = document.querySelector('.form-details')
+    const formDate = document.querySelector('.form-date')
+
+    console.log(entryID)
+    const updateTitle = document.getElementById(entryID).getElementsByClassName('to-do-title')[0]
+    updateTitle.textContent = formTitle.value;
 }
 
 Form.create()
