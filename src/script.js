@@ -7,6 +7,7 @@ function pageLoad() {
 class Form {
     constructor() {
         CreateFormElement()
+        
     }
 }
 
