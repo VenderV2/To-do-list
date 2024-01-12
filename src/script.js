@@ -7,7 +7,6 @@ function pageLoad() {
 class Form {
     constructor() {
         CreateFormElement()
-        
     }
 }
 
@@ -18,7 +17,7 @@ class ToDoObject {
         this.checked = formChecked;
         this.projectType = formProjectType;
         this.dueDate = formDueDate;
-        CreateToDoElement(this.title, this.details, this.date, this.checked, this.projectType, this.dueDate)
+        CreateToDoElement(this.title, this.details, this.dueDate, this.checked, this.projectType)
 
 
 
@@ -33,26 +32,29 @@ class ToDoObject {
 
 }
 
-function CreateToDoElement(formTitle) {
+function CreateToDoElement(objTitle, objDetails, objDueDate, objChecked, objProjectType) {
     const newToDo = document.createElement('div');
     newToDo.classList.add('to-do-element');
 
     const checkbox = document.createElement('input')
     checkbox.type = 'checkbox'
+    checkbox.value = objChecked
     checkbox.classList.add('checkbox')
     newToDo.appendChild(checkbox)
 
     const title = document.createElement('div')
     title.classList.add('to-do-title')
-    title.textContent = formTitle
+    title.textContent = objTitle
     newToDo.appendChild(title)
 
     const detailsBtn = document.createElement('button')
     detailsBtn.classList.add('detailsBtn')
     newToDo.appendChild(detailsBtn)
 
-    const date = document.createElement('div')
+    const date = document.createElement('input')
+    date.type = 'date'
     date.classList.add('date')
+    date.value = objDueDate
     newToDo.appendChild(date)
 
     const editBtn = document.createElement('button')
