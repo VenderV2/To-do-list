@@ -51,10 +51,13 @@ class Form {
 class EditForm {
     constructor(title, details, dueDate, checked, projectType, entryID) {
         this.entryID = entryID
-        CreateEditForm(title, details, dueDate, checked, projectType, entryID)
+         CreateEditForm(title, details, dueDate, checked, projectType, entryID)
     }
-    Confirm(id) {
-        console.log(id)
+    // Create() {
+    //     CreateEditForm(title, details, dueDate, checked, projectType, entryID)
+    // }
+    ConfirmButton(id) {
+        // console.log(id)
         UpdateEntryFields(id)
         Form.delete()
         Form.delete()
@@ -97,7 +100,7 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objChecked, objProj
     const editBtn = document.createElement('button')
     editBtn.classList.add('editBtn')
     editBtn.textContent = 'Edit'                    
-    editBtn.addEventListener('click', () => {ToDoObject.editEntry(newToDo.id)})
+    editBtn.addEventListener('click', (e) => {ToDoObject.editEntry(newToDo.id)},{captured: true})
     newToDo.appendChild(editBtn)
 
     const delBtn = document.createElement('button')
@@ -184,11 +187,12 @@ function CreateEditForm(objTitle, objDetails, objDueDate, objChecked, objProject
     confirm.classList.add('form-confirm')
     confirm.textContent = 'Confirm'
     newForm.appendChild(confirm)
-    confirm.addEventListener('click', () => {
+    confirm.addEventListener('mouseup', (e) => {
+
         const newEditForm = new EditForm;
-        newEditForm.Confirm(entryID)
-        
-    })                     //unfinished
+        newEditForm.ConfirmButton(entryID)
+        e.stopPropagation
+    }, {captured: true})                     //unfinished
 
     const delBtn = document.createElement('button')
     delBtn.classList.add('delBtn')
