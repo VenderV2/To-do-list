@@ -20,8 +20,11 @@ class ToDoObject {
         const newEditForm = new EditForm(entryData.title, entryData.details, entryData.dueDate, entryData.projectType, entryData.ID)
     }
 
-    static delete() {
-
+    static delete(id) {
+        const entryToBeDeleted = document.getElementById(id)
+        entryToBeDeleted.remove()
+        RemoveLibraryIDs(id)
+        console.log(library)
     }
     static addNewEntry() {
         Form.create()
@@ -90,7 +93,7 @@ class EditForm {
         const formProjectType = document.querySelector('.form-project-type')
 
         const editedToDo = new EditedToDoObject(id, formTitle.value, formDetails.value, formDate.value, formProjectType.value)
-        UpdateLibraryIDs(id)
+        RemoveLibraryIDs(id)
         library.push(editedToDo)
         IDs.push(editedToDo.ID)
         console.log(library)
@@ -138,6 +141,7 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objProjectType, obj
     const delBtn = document.createElement('button')
     delBtn.classList.add('delBtn')
     delBtn.textContent = 'Delete'
+    delBtn.addEventListener('click', () => {ToDoObject.delete(newToDo.id)})
     newToDo.appendChild(delBtn)
 
     const contentArea = document.querySelector('.main-area');
@@ -258,7 +262,7 @@ function UpdateEntryFields(entryID, title, dueDate, projectType) {
     updateDate.value = dueDate;
 }
 
-function UpdateLibraryIDs(id) {
+function RemoveLibraryIDs(id) {
     indexInIDarray = IDs.indexOf(id)
     IDs.splice(indexInIDarray, 1)
     library.splice(indexInIDarray, 1)
