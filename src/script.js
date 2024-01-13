@@ -82,8 +82,11 @@ class EditForm {
         const formDate = document.querySelector('.form-date')
 
         const editedToDo = new EditedToDoObject(id, formTitle.value, formDetails.value, formDate.value)
+        UpdateLibraryIDs(id)
+        library.push(editedToDo)
+        IDs.push(editedToDo.ID)
+        console.log(library)
 
-        console.log(id)
         Form.delete()
         Form.delete()
     }
@@ -239,13 +242,15 @@ function UpdateEntryFields(entryID, title, details, dueDate, checked, projectTyp
     console.log(entryID)
     const updateTitle = document.getElementById(entryID).getElementsByClassName('to-do-title')[0]
     updateTitle.textContent = title;
-    console.log(Object.getPrototypeOf(updateTitle))
 
     const updateDate = document.getElementById(entryID).getElementsByClassName('date')[0]
     updateDate.textContent = dueDate;
 }
 
-function UpdateLibraryIDs(entryID) {
+function UpdateLibraryIDs(id) {
+    indexInIDarray = IDs.indexOf(id)
+    IDs.splice(indexInIDarray, 1)
+    library.splice(indexInIDarray, 1)
 
 }
 
