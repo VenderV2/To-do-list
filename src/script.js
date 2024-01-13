@@ -2,11 +2,14 @@
 const library = [];
 const IDs = [];
 
+
+
+
 class ToDoObject {
-    constructor(formTitle, formDetails, formDueDate, formChecked, formProjectType) {
+    constructor(formTitle, formDetails, formDueDate, formProjectType) {
         this.title = formTitle;
         this.details = formDetails;
-        this.checked = formChecked;
+        // this.checked = formChecked;
         this.projectType = formProjectType;
         this.dueDate = formDueDate;
         this.ID = CreateToDoElement(this.title, this.details, this.dueDate, this.checked, this.projectType)
@@ -14,24 +17,27 @@ class ToDoObject {
     static editEntry(entryID) {
         const entryData = getIndexOfID(entryID)
         console.log(entryID)
-        const newEditForm = new EditForm(entryData.title, entryData.details, entryData.dueDate, entryData.checked, entryData.projectType, entryData.ID)
+        const newEditForm = new EditForm(entryData.title, entryData.details, entryData.dueDate, entryData.projectType, entryData.ID)
     }
 
     static delete() {
 
     }
+    static addNewEntry() {
+        Form.create()
+    }
 
 }
 
 class EditedToDoObject {
-    constructor(id, formTitle, formDetails, formDueDate, formChecked, formProjectType) {
+    constructor(id, formTitle, formDetails, formDueDate, formProjectType) {
         this.ID = id
         this.title = formTitle;
         this.details = formDetails;
-        this.checked = formChecked;
+        // this.checked = formChecked;
         this.projectType = formProjectType;
         this.dueDate = formDueDate;
-        UpdateEntryFields(this.ID, this.title, this.details, this.dueDate, this.checked, this.projectType)
+        UpdateEntryFields(this.ID, this.title, this.dueDate, this.projectType)
     }
     // static editEntry(entryID) {
     //     const entryData = getIndexOfID(entryID)
@@ -60,8 +66,9 @@ class Form {
         const formTitle = document.querySelector('.form-title')
         const formDetails = document.querySelector('.form-details')
         const formDate = document.querySelector('.form-date')
+        const formProjectType = document.querySelector('.form-project-type')
     
-        const newToDoObj = new ToDoObject(formTitle.value, formDetails.value, formDate.value)
+        const newToDoObj = new ToDoObject(formTitle.value, formDetails.value, formDate.value, formProjectType.value)
         library.push(newToDoObj)
         IDs.push(newToDoObj.ID)
         Form.delete()
@@ -69,9 +76,9 @@ class Form {
 }
 
 class EditForm {
-    constructor(title, details, dueDate, checked, projectType, entryID) {
+    constructor(title, details, dueDate, projectType, entryID) {
         this.entryID = entryID
-         CreateEditForm(title, details, dueDate, checked, projectType, entryID)
+         CreateEditForm(title, details, dueDate, projectType, entryID)
     }
     // Create() {
     //     CreateEditForm(title, details, dueDate, checked, projectType, entryID)
@@ -80,8 +87,9 @@ class EditForm {
         const formTitle = document.querySelector('.form-title')
         const formDetails = document.querySelector('.form-details')
         const formDate = document.querySelector('.form-date')
+        const formProjectType = document.querySelector('.form-project-type')
 
-        const editedToDo = new EditedToDoObject(id, formTitle.value, formDetails.value, formDate.value)
+        const editedToDo = new EditedToDoObject(id, formTitle.value, formDetails.value, formDate.value, formProjectType.value)
         UpdateLibraryIDs(id)
         library.push(editedToDo)
         IDs.push(editedToDo.ID)
@@ -94,7 +102,7 @@ class EditForm {
 
 //creates new entry and appends it to the list area
 //input values are passed from form input values
-function CreateToDoElement(objTitle, objDetails, objDueDate, objChecked, objProjectType) {
+function CreateToDoElement(objTitle, objDetails, objDueDate, objProjectType, objChecked) {
     const newToDo = document.createElement('div');
     newToDo.classList.add('to-do-element');
     newToDo.id = Date.now()  //This line creates and sets the unique id for each entry
@@ -110,10 +118,6 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objChecked, objProj
     //title.id = newToDo.id
     title.textContent = objTitle
     newToDo.appendChild(title)
-
-    const details = document.createElement('div')
-    details.classList.add('details')
-    details.textContent = objDetails
 
     const detailsBtn = document.createElement('button')
     detailsBtn.classList.add('detailsBtn')
@@ -140,7 +144,6 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objChecked, objProj
     contentArea.appendChild(newToDo)
 
     return  newToDo.id
-
 }
 
 //creates entry input window and blurs background
@@ -161,6 +164,10 @@ function CreateFormElement() {
     date.classList.add('form-date')   
     date.type = 'date'
     newForm.appendChild(date)
+
+    const projectType = document.createElement('input')
+    projectType.classList.add('form-project-type')
+    newForm.appendChild(projectType)
 
     const submit = document.createElement('button')
     submit.classList.add('form-submit')
@@ -190,7 +197,7 @@ function getIndexOfID(entryID) {
     return library[idIndex];
 }
 
-function CreateEditForm(objTitle, objDetails, objDueDate, objChecked, objProjectType, entryID) {
+function CreateEditForm(objTitle, objDetails, objDueDate, objProjectType, entryID) {
     const newForm = document.createElement('div')
     newForm.classList.add('form-element')
 
@@ -211,12 +218,16 @@ function CreateEditForm(objTitle, objDetails, objDueDate, objChecked, objProject
     newForm.appendChild(date)
     date.value = objDueDate
 
+    const projectType = document.createElement('input')
+    projectType.classList.add('form-project-type')
+    newForm.appendChild(projectType)
+    projectType.value = objProjectType
+
     const confirm = document.createElement('button')
     confirm.classList.add('form-confirm')
     confirm.textContent = 'Confirm'
     newForm.appendChild(confirm)
     confirm.addEventListener('mouseup', (e) => {
-
         const newEditForm = new EditForm;
         newEditForm.ConfirmButton(entryID)
         e.stopPropagation
@@ -238,13 +249,13 @@ function CreateEditForm(objTitle, objDetails, objDueDate, objChecked, objProject
     page.appendChild(newFormBackground)
 }
 
-function UpdateEntryFields(entryID, title, details, dueDate, checked, projectType) {
+function UpdateEntryFields(entryID, title, dueDate, projectType) {
     console.log(entryID)
     const updateTitle = document.getElementById(entryID).getElementsByClassName('to-do-title')[0]
     updateTitle.textContent = title;
 
     const updateDate = document.getElementById(entryID).getElementsByClassName('date')[0]
-    updateDate.textContent = dueDate;
+    updateDate.value = dueDate;
 }
 
 function UpdateLibraryIDs(id) {
@@ -254,4 +265,14 @@ function UpdateLibraryIDs(id) {
 
 }
 
-Form.create()
+function newEntryButton() {
+    const addNewEntryButton = document.createElement('button')
+    addNewEntryButton.classList.add('new-entry-button')
+    addNewEntryButton.textContent = '+'
+    addNewEntryButton.addEventListener('click', ToDoObject.addNewEntry)
+
+    const header = document.querySelector('.header')
+    header.appendChild(addNewEntryButton)
+}
+newEntryButton();
+
