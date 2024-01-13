@@ -12,7 +12,7 @@ class ToDoObject {
         // this.checked = formChecked;
         this.projectType = formProjectType;
         this.dueDate = formDueDate;
-        this.ID = CreateToDoElement(this.title, this.details, this.dueDate, this.checked, this.projectType)
+        this.ID = CreateToDoElement(this.title, this.details, this.dueDate, this.projectType)
     }
     static editEntry(entryID) {
         const entryData = getIndexOfID(entryID)
@@ -110,6 +110,12 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objProjectType, obj
     newToDo.classList.add('to-do-element');
     newToDo.id = Date.now()  //This line creates and sets the unique id for each entry
 
+    const colourTag = document.createElement('div')
+    colourTag.classList.add('colour-tag')
+    newToDo.appendChild(colourTag)
+    const colourTagType = getColour(objProjectType)
+    colourTag.style.backgroundColor = colourTagType;
+
     const checkbox = document.createElement('input')
     checkbox.type = 'checkbox'
     checkbox.value = objChecked
@@ -122,21 +128,25 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objProjectType, obj
     title.textContent = objTitle
     newToDo.appendChild(title)
 
+    const date = document.createElement('div')
+    date.classList.add('date')
+    date.textContent = objDueDate
+    newToDo.appendChild(date)
+
     const detailsBtn = document.createElement('button')
     detailsBtn.classList.add('detailsBtn')
+    detailsBtn.textContent = 'Details'
     newToDo.appendChild(detailsBtn)
-
-    const date = document.createElement('input')
-    date.type = 'date'
-    date.classList.add('date')
-    date.value = objDueDate
-    newToDo.appendChild(date)
 
     const editBtn = document.createElement('button')
     editBtn.classList.add('editBtn')
-    editBtn.textContent = 'Edit'                    
+    // editBtn.textContent = 'Edit'                    
     editBtn.addEventListener('click', (e) => {ToDoObject.editEntry(newToDo.id)},{captured: true})
     newToDo.appendChild(editBtn)
+    const editIcon = document.createElement('img')
+    editIcon.src = "./icons/magnify.svg"
+    editBtn.appendChild(editIcon)
+
 
     const delBtn = document.createElement('button')
     delBtn.classList.add('delBtn')
@@ -146,7 +156,6 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objProjectType, obj
 
     const contentArea = document.querySelector('.main-area');
     contentArea.appendChild(newToDo)
-
     return  newToDo.id
 }
 
@@ -259,7 +268,7 @@ function UpdateEntryFields(entryID, title, dueDate, projectType) {
     updateTitle.textContent = title;
 
     const updateDate = document.getElementById(entryID).getElementsByClassName('date')[0]
-    updateDate.value = dueDate;
+    updateDate.textContent = dueDate;
 }
 
 function RemoveLibraryIDs(id) {
@@ -280,3 +289,22 @@ function newEntryButton() {
 }
 newEntryButton();
 
+function getColour(projectType) {
+    const lowerCaseProjType = String(projectType);
+    if (lowerCaseProjType.toLowerCase() == 'home') {
+        return 'green';
+    }
+    else if(lowerCaseProjType.toLowerCase() == 'work') {
+        return 'blue';
+    }
+    else if (lowerCaseProjType.toLowerCase() == 'study') {
+        return 'purple';
+    }
+    else if (lowerCaseProjType.toLowerCase() == 'today') {
+        return 'orange';
+    }
+}
+
+
+
+CreateToDoElement('hello')
