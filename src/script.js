@@ -120,6 +120,7 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objProjectType, obj
     checkbox.type = 'checkbox'
     checkbox.value = objChecked
     checkbox.classList.add('checkbox')
+   
     newToDo.appendChild(checkbox)
 
     const title = document.createElement('div')
@@ -139,20 +140,21 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objProjectType, obj
     newToDo.appendChild(detailsBtn)
 
     const editBtn = document.createElement('button')
-    editBtn.classList.add('editBtn')
-    // editBtn.textContent = 'Edit'                    
+    editBtn.classList.add('editBtn')                   
     editBtn.addEventListener('click', (e) => {ToDoObject.editEntry(newToDo.id)},{captured: true})
     newToDo.appendChild(editBtn)
     const editIcon = document.createElement('img')
-    editIcon.src = "./icons/magnify.svg"
+    editIcon.src = "./icons/square-edit-outline.svg"
     editBtn.appendChild(editIcon)
 
 
     const delBtn = document.createElement('button')
     delBtn.classList.add('delBtn')
-    delBtn.textContent = 'Delete'
     delBtn.addEventListener('click', () => {ToDoObject.delete(newToDo.id)})
     newToDo.appendChild(delBtn)
+    const deleteIcon = document.createElement('img')
+    deleteIcon.src = 'icons/trash-can-outline.svg'
+    delBtn.appendChild(deleteIcon)
 
     const contentArea = document.querySelector('.main-area');
     contentArea.appendChild(newToDo)
@@ -244,7 +246,7 @@ function CreateEditForm(objTitle, objDetails, objDueDate, objProjectType, entryI
         const newEditForm = new EditForm;
         newEditForm.ConfirmButton(entryID)
         e.stopPropagation
-    }, {captured: true})                     //unfinished
+    }, {captured: true})             
 
     const delBtn = document.createElement('button')
     delBtn.classList.add('delBtn')
@@ -281,11 +283,16 @@ function RemoveLibraryIDs(id) {
 function newEntryButton() {
     const addNewEntryButton = document.createElement('button')
     addNewEntryButton.classList.add('new-entry-button')
-    addNewEntryButton.textContent = '+'
+    // addNewEntryButton.textContent = '+'
     addNewEntryButton.addEventListener('click', ToDoObject.addNewEntry)
+    const addIcon = document.createElement('img')
+    addIcon.src = 'icons/plus.svg'
+    addIcon.setAttribute('fill', 'currentColor')
+    addIcon.classList.add('addIcon')
+    addNewEntryButton.appendChild(addIcon)
 
-    const header = document.querySelector('.header')
-    header.appendChild(addNewEntryButton)
+    const sidebar = document.querySelector('.sidebar')
+    sidebar.appendChild(addNewEntryButton)
 }
 newEntryButton();
 

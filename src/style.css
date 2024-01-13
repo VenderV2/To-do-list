@@ -10,6 +10,10 @@ body {
     position: absolute;
 }
 
+:root {
+    --primary: rgb(49, 192, 144);
+}
+
 
 .sidebar {
     grid-area: 1/1/2/2;
@@ -34,7 +38,7 @@ body {
     font-size: 30px;
     position: relative;
     top: 20px;
-    left: 80px;
+    left: 30px;
     font-weight:700;
     letter-spacing: 1px;
 }
@@ -50,7 +54,7 @@ body {
 .content {
     display: grid;
     grid-template-columns: repeat(1, 5fr) repeat(1, 2fr);
-    grid-template-rows: repeat(1, 200px) repeat(1, 1fr);
+    grid-template-rows: repeat(1, 100px) repeat(1, 1fr);
 }
 
 .header {
@@ -96,13 +100,20 @@ input {
     border-radius: 5px;
     margin: 5px;    
     align-items: center;
+    overflow: hidden;
+}
+
+.to-do-element:hover {
+    height: 60px;
+    width: 102%;
+    box-shadow: 5px 5px 10px rgb(187, 187, 187);
 }
 
 .to-do-title {
     flex: 1 1 auto;
-    /* padding: 10px; */
-    min-width: 250px;
+    min-width: 50px;
     margin: 10px;
+
 }
 
 .checkbox {
@@ -112,6 +123,13 @@ input {
     height: 20px;
     margin-right: 10px;
     margin: 10px;
+    background: none;
+    border-color: var(--primary);
+    border: 5px;
+}
+
+.checkbox input:checked {
+    background-color: var(--primary);
 }
 
 .date {
@@ -125,18 +143,33 @@ input {
     margin-left: 10px;
     margin: 10px;
     height: 50%;
+    background: none;
+    border-color: var(--primary);
+    border-style: solid;
+    border-radius: 5px;
+    color: rgb(49, 192, 144);
 }
 
 .editBtn {
     width: 40px;
+    height: 40px;
     margin-left: 10px;
     margin: 10px;
+    background: none;
+    border: none;
+    min-width: 40px;
+    min-height: 40px;
 }
 
 .delBtn {
+    height: 40px;
     width: 40px;
     margin-left: 10px;
     margin: 10px;
+    background: none;
+    border: none;
+    min-width: 40px;
+    min-height: 40px;
     
 }
 
@@ -175,4 +208,22 @@ input {
     top: 0px;
     left: 0px;
     backdrop-filter: blur(100px);
+}
+
+.new-entry-button {
+    height: 70px;
+    width: 70px;
+    position: relative;
+    bottom: -200px;
+    left: 100px;
+    border-radius: 50px;
+    border: none;
+    background-color: pink;
+    color: rgb(255, 255, 255);
+    box-shadow: 5px 5px 10px rgb(202, 123, 185);
+
+}
+
+.addIcon {
+    filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(127deg) brightness(100%) contrast(104%);
 }
