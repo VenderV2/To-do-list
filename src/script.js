@@ -23,6 +23,26 @@ class ToDoObject {
 
 }
 
+class EditedToDoObject {
+    constructor(id, formTitle, formDetails, formDueDate, formChecked, formProjectType) {
+        this.ID = id
+        this.title = formTitle;
+        this.details = formDetails;
+        this.checked = formChecked;
+        this.projectType = formProjectType;
+        this.dueDate = formDueDate;
+        UpdateEntryFields(this.ID, this.title, this.details, this.dueDate, this.checked, this.projectType)
+    }
+    // static editEntry(entryID) {
+    //     const entryData = getIndexOfID(entryID)
+    //     console.log(entryID)
+    //     const newEditForm = new EditForm(entryData.title, entryData.details, entryData.dueDate, entryData.checked, entryData.projectType, entryData.ID)
+    // }
+    // static delete() {
+
+    // }
+}
+
 class Form {
     constructor() {
         
@@ -57,8 +77,13 @@ class EditForm {
     //     CreateEditForm(title, details, dueDate, checked, projectType, entryID)
     // }
     ConfirmButton(id) {
-        // console.log(id)
-        UpdateEntryFields(id)
+        const formTitle = document.querySelector('.form-title')
+        const formDetails = document.querySelector('.form-details')
+        const formDate = document.querySelector('.form-date')
+
+        const editedToDo = new EditedToDoObject(id, formTitle.value, formDetails.value, formDate.value)
+
+        console.log(id)
         Form.delete()
         Form.delete()
     }
@@ -69,7 +94,7 @@ class EditForm {
 function CreateToDoElement(objTitle, objDetails, objDueDate, objChecked, objProjectType) {
     const newToDo = document.createElement('div');
     newToDo.classList.add('to-do-element');
-    newToDo.id = objDetails.replace(/ /g,'')
+    newToDo.id = Date.now()  //This line creates and sets the unique id for each entry
 
     const checkbox = document.createElement('input')
     checkbox.type = 'checkbox'
@@ -210,14 +235,18 @@ function CreateEditForm(objTitle, objDetails, objDueDate, objChecked, objProject
     page.appendChild(newFormBackground)
 }
 
-function UpdateEntryFields(entryID) {
-    const formTitle = document.querySelector('.form-title')
-    const formDetails = document.querySelector('.form-details')
-    const formDate = document.querySelector('.form-date')
-
+function UpdateEntryFields(entryID, title, details, dueDate, checked, projectType) {
     console.log(entryID)
     const updateTitle = document.getElementById(entryID).getElementsByClassName('to-do-title')[0]
-    updateTitle.textContent = formTitle.value;
+    updateTitle.textContent = title;
+    console.log(Object.getPrototypeOf(updateTitle))
+
+    const updateDate = document.getElementById(entryID).getElementsByClassName('date')[0]
+    updateDate.textContent = dueDate;
+}
+
+function UpdateLibraryIDs(entryID) {
+
 }
 
 Form.create()
