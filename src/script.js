@@ -169,20 +169,20 @@ function CreateFormElement() {
 
     const title = document.createElement('input')
     title.classList.add('form-title')
-    newForm.appendChild(title)
+    // newForm.appendChild(title)
 
     const details = document.createElement('input')
     details.classList.add('form-details')
-    newForm.appendChild(details)
+    // newForm.appendChild(details)
 
     const date = document.createElement('input')
     date.classList.add('form-date')   
     date.type = 'date'
-    newForm.appendChild(date)
+    // newForm.appendChild(date)
 
     const projectType = document.createElement('input')
     projectType.classList.add('form-project-type')
-    newForm.appendChild(projectType)
+    // newForm.appendChild(projectType)
 
     const submit = document.createElement('button')
     submit.classList.add('form-submit')
@@ -191,8 +191,8 @@ function CreateFormElement() {
     submit.addEventListener('click', Form.Submit)
 
     const delBtn = document.createElement('button')
-    delBtn.classList.add('delBtn')
-    delBtn.textContent = 'Cancel'
+    delBtn.classList.add('delBtnForm')
+    delBtn.textContent = 'X'
     delBtn.addEventListener('click', Form.delete)
     newForm.appendChild(delBtn)
 
@@ -204,6 +204,11 @@ function CreateFormElement() {
     const page = document.querySelector('html')
     page.appendChild(newForm)
     page.appendChild(newFormBackground)
+
+    const formFlexContainer = document.createElement('div')
+    formFlexContainer.classList.add('form-flex-container')
+    newForm.appendChild(formFlexContainer)
+    formFlexContainer.append(title, details, date, projectType)
 }
 
 
