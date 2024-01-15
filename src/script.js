@@ -352,18 +352,23 @@ function createPlaceHolders() {
 }
 createPlaceHolders()
 
-function filterLibrary(projectName) {
-    const filteredLibraryByProperties = [];
-    function filter_projectType() {
-        library.forEach(entry => {
-            filteredLibraryByProperties.push(entry.projectType)
-        });
-        return filteredLibraryByProperties;
+
+
+function CreateFilteredList(projectName) {
+    function ClearPage() {
+        const element = document.getElementById("main-area");
+        while (element.firstChild) {
+        element.removeChild(element.firstChild);
+        }
     }
-    filter_projectType()
-
-
-    console.log(filteredLibraryByProperties)
+    ClearPage();
+    function filterLibrary(projectName) {
+        library.forEach(entry => {
+            if (entry.projectType == projectName) {
+                CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType)
+            }
+        });
+    }
+    filterLibrary(projectName);
 }
-filterLibrary()
-// console.log(library[0].projectType)
+CreateFilteredList('work')
