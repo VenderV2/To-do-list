@@ -185,7 +185,7 @@ input {
 
 .colour-tag {
     border-radius: 5px;
-    width: 3px;
+    width: 4px;
     /* background-color: red; */
     height: 100%;
 }
@@ -307,9 +307,9 @@ input {
 .new-entry-button {
     height: 70px;
     width: 70px;
-    position: relative;
-    bottom: -200px;
-    left: 100px;
+    position: absolute;
+    bottom:50px;
+    left: 35px;
     border-radius: 50px;
     border: none;
     background-color: var(--primary);
@@ -322,3 +322,9 @@ input {
     filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(127deg) brightness(100%) contrast(104%);
 }
 
+.displayedDate {
+    font-size: 36px;
+    margin: 20px;
+    margin-left: 40px;
+    margin-top: 25px;
+}

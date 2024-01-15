@@ -3,8 +3,6 @@ const library = [];
 const IDs = [];
 
 
-
-
 class ToDoObject {
     constructor(formTitle, formDetails, formDueDate, formProjectType) {
         this.title = formTitle;
@@ -17,6 +15,7 @@ class ToDoObject {
     static editEntry(entryID) {
         const entryData = getIndexOfID(entryID)
         console.log(entryID)
+        console.log(entryData.title)
         const newEditForm = new EditForm(entryData.title, entryData.details, entryData.dueDate, entryData.projectType, entryData.ID)
     }
 
@@ -223,28 +222,28 @@ function CreateEditForm(objTitle, objDetails, objDueDate, objProjectType, entryI
 
     const title = document.createElement('input')
     title.classList.add('form-title')
-    newForm.appendChild(title)
+    // newForm.appendChild(title)
     title.value = objTitle
     
 
     const details = document.createElement('input')
     details.classList.add('form-details')
-    newForm.appendChild(details)
+    // newForm.appendChild(details)
     details.value = objDetails
 
     const date = document.createElement('input')
     date.classList.add('form-date')   
     date.type = 'date'
-    newForm.appendChild(date)
+    // newForm.appendChild(date)
     date.value = objDueDate
 
     const projectType = document.createElement('input')
     projectType.classList.add('form-project-type')
-    newForm.appendChild(projectType)
+    // newForm.appendChild(projectType)
     projectType.value = objProjectType
 
     const confirm = document.createElement('button')
-    confirm.classList.add('form-confirm')
+    confirm.classList.add('form-submit')
     confirm.textContent = 'Confirm'
     newForm.appendChild(confirm)
     confirm.addEventListener('mouseup', (e) => {
@@ -254,8 +253,8 @@ function CreateEditForm(objTitle, objDetails, objDueDate, objProjectType, entryI
     }, {captured: true})             
 
     const delBtn = document.createElement('button')
-    delBtn.classList.add('delBtn')
-    delBtn.textContent = 'Cancel'
+    delBtn.classList.add('delBtnForm')
+    delBtn.textContent = 'X'
     delBtn.addEventListener('click', Form.delete)
     newForm.appendChild(delBtn)
 
@@ -267,6 +266,11 @@ function CreateEditForm(objTitle, objDetails, objDueDate, objProjectType, entryI
     const page = document.querySelector('html')
     page.appendChild(newForm)
     page.appendChild(newFormBackground)
+
+    const formFlexContainer = document.createElement('div')
+    formFlexContainer.classList.add('form-flex-container')
+    newForm.appendChild(formFlexContainer)
+    formFlexContainer.append(title, details, date, projectType)
 }
 
 function UpdateEntryFields(entryID, title, dueDate, projectType) {
@@ -319,4 +323,47 @@ function getColour(projectType) {
 
 
 
-CreateToDoElement('hello')
+function GetCurrentDate() {
+    const todaysDate = new Date().toDateString()
+    return todaysDate;
+}
+
+function DisplayCurrentDate() {
+    const header = document.querySelector('.header')
+    const displayedDate = document.createElement('div')
+    displayedDate.classList.add('displayedDate')
+    header.appendChild(displayedDate)
+    displayedDate.textContent = GetCurrentDate()
+
+}
+
+DisplayCurrentDate()
+
+
+function createPlaceHolders() {
+    CreateToDoElement('hello')     ///////PLACE HOLDERS FOR FRONT PAGE
+    const WorkplaceHolderObj = new ToDoObject('work', 'do work', '', 'work')
+    const HomeplaceHolderObj = new ToDoObject('home', 'do home', '', 'home')
+    const StudyplaceHolderObj = new ToDoObject('study', 'do study', '', 'study')
+    
+    library.push(WorkplaceHolderObj, HomeplaceHolderObj, StudyplaceHolderObj)
+    console.log(library) 
+    IDs.push(WorkplaceHolderObj.ID, HomeplaceHolderObj.ID, StudyplaceHolderObj.ID)
+}
+createPlaceHolders()
+
+function filterLibrary(projectName) {
+    const filteredLibraryByProperties = [];
+    function filter_projectType() {
+        library.forEach(entry => {
+            filteredLibraryByProperties.push(entry.projectType)
+        });
+        return filteredLibraryByProperties;
+    }
+    filter_projectType()
+
+
+    console.log(filteredLibraryByProperties)
+}
+filterLibrary()
+// console.log(library[0].projectType)
