@@ -15,7 +15,9 @@ class ToDoObject {
         // this.checked = formChecked;
         this.projectType = formProjectType;
         this.dueDate = formDueDate;
-        this.ID = CreateToDoElement(this.title, this.details, this.dueDate, this.projectType)
+        const unconvertedID = Date.now() + Math.floor(Math.random() * (1000 - 0))
+        this.ID = unconvertedID.toString()
+        CreateToDoElement(this.title, this.details, this.dueDate, this.projectType, this.checked, this.ID)
     }
     static editEntry(entryID) {
         const entryData = getIndexOfID(entryID)
@@ -46,14 +48,7 @@ class EditedToDoObject {
         this.dueDate = formDueDate;
         UpdateEntryFields(this.ID, this.title, this.dueDate, this.projectType)
     }
-    // static editEntry(entryID) {
-    //     const entryData = getIndexOfID(entryID)
-    //     console.log(entryID)
-    //     const newEditForm = new EditForm(entryData.title, entryData.details, entryData.dueDate, entryData.checked, entryData.projectType, entryData.ID)
-    // }
-    // static delete() {
 
-    // }
 }
 
 class Form {
@@ -109,10 +104,10 @@ class EditForm {
 
 //creates new entry and appends it to the list area
 //input values are passed from form input values
-function CreateToDoElement(objTitle, objDetails, objDueDate, objProjectType, objChecked) {
+function CreateToDoElement(objTitle, objDetails, objDueDate, objProjectType, objChecked, objID) {
     const newToDo = document.createElement('div');
     newToDo.classList.add('to-do-element');
-    newToDo.id = Date.now()  //This line creates and sets the unique id for each entry
+    newToDo.id = objID  //This line creates and sets the unique id for each entry
 
     const colourTag = document.createElement('div')
     colourTag.classList.add('colour-tag')
@@ -129,7 +124,6 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objProjectType, obj
 
     const title = document.createElement('div')
     title.classList.add('to-do-title')
-    //title.id = newToDo.id
     title.textContent = objTitle
     newToDo.appendChild(title)
 
@@ -145,7 +139,7 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objProjectType, obj
 
     const editBtn = document.createElement('button')
     editBtn.classList.add('editBtn')                   
-    editBtn.addEventListener('click', (e) => {ToDoObject.editEntry(newToDo.id)},{captured: true})
+    editBtn.addEventListener('click', (e) => {ToDoObject.editEntry(newToDo.id)})
     newToDo.appendChild(editBtn)
     const editIcon = document.createElement('img')
     editIcon.src = "./icons/square-edit-outline.svg"
@@ -217,7 +211,14 @@ function CreateFormElement() {
 
 
 function getIndexOfID(entryID) {
+    console.log(entryID)
+    console.log(IDs)
+    console.log(typeof(entryID))
+    console.log(typeof(IDs))
     idIndex = IDs.indexOf(entryID);
+    console.log('get index of id complete')
+    console.log(idIndex)
+    console.log(library[idIndex])
     return library[idIndex];
 }
 
@@ -344,8 +345,7 @@ function DisplayCurrentDate() {
 DisplayCurrentDate()
 
 
-function createPlaceHolders() {
-    CreateToDoElement('hello')     ///////PLACE HOLDERS FOR FRONT PAGE
+function createPlaceHolders() {    ////////////////////////PLACE HOLDERS FOR FRONT PAGE
     const date = new Date
     const WorkplaceHolderObj = new ToDoObject('work', 'do work', date.toDateString(), 'work')
     const HomeplaceHolderObj = new ToDoObject('home', 'do home', date.addDays(3).toDateString(), 'home')
@@ -369,7 +369,7 @@ function CreateFilteredList(projectName) {
     function filterLibrary(projectName) {
         library.forEach(entry => {
             if (entry.projectType == projectName) {
-                CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType)
+                CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType, entry.checked, entry.ID)
             }
         });
     }
@@ -400,7 +400,7 @@ class DateFilter {
             library.forEach(entry => {
                 const convertDateToDateObj = new Date(entry.dueDate).toDateString()
                 if (convertDateToDateObj == dueDate) {
-                    CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType)
+                    CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType, entry.checked, entry.ID)
                 }
             });
         }
@@ -432,7 +432,7 @@ class DateFilter {
                     const day = date.toDateString()
 
                     if (LibDate == day) {
-                        CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType)
+                        CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType, entry.checked, entry.ID)
                     }
                 });
             });
@@ -446,7 +446,7 @@ function navMenuLogic() {
     homePage.addEventListener('click', () => {
         ClearPage()
         library.forEach(entry => {
-            CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType)
+            CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType, entry.checked, entry.ID)
         });
     })
     
