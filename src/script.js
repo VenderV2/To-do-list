@@ -135,7 +135,7 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objProjectType, obj
 
     const date = document.createElement('div')
     date.classList.add('date')
-    date.textContent = objDueDate
+    date.textContent = new Date(objDueDate).toDateString()
     newToDo.appendChild(date)
 
     const detailsBtn = document.createElement('button')
@@ -348,7 +348,7 @@ function createPlaceHolders() {
     CreateToDoElement('hello')     ///////PLACE HOLDERS FOR FRONT PAGE
     const date = new Date
     const WorkplaceHolderObj = new ToDoObject('work', 'do work', date.toDateString(), 'work')
-    const HomeplaceHolderObj = new ToDoObject('home', 'do home', date.toDateString(), 'home')
+    const HomeplaceHolderObj = new ToDoObject('home', 'do home', date.addDays(3).toDateString(), 'home')
     const StudyplaceHolderObj = new ToDoObject('study', 'do study', '2024-04-23', 'study')
     
     library.push(WorkplaceHolderObj, HomeplaceHolderObj, StudyplaceHolderObj)
@@ -435,18 +435,11 @@ class DateFilter {
                         CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType)
                     }
                 });
-
-
             });
         }
         filterLibrary();
     }
-
 }
-
-DateFilter.CreateFilteredListByWorkWeek()
-
-
 
 function navMenuLogic() {
     const homePage = document.querySelector('#home-page');
@@ -479,6 +472,9 @@ function navMenuLogic() {
     })
 
     const weekFilter = document.querySelector('#week');
+    weekFilter.addEventListener('click', () => {
+        DateFilter.CreateFilteredListByWorkWeek()
+    })
 } navMenuLogic()
 
 // const date1 = new Date
