@@ -352,15 +352,14 @@ function createPlaceHolders() {
 }
 createPlaceHolders()
 
-
+function ClearPage() {
+    const element = document.getElementById("main-area");
+    while (element.firstChild) {
+    element.removeChild(element.firstChild);
+    }
+}
 
 function CreateFilteredList(projectName) {
-    function ClearPage() {
-        const element = document.getElementById("main-area");
-        while (element.firstChild) {
-        element.removeChild(element.firstChild);
-        }
-    }
     ClearPage();
     function filterLibrary(projectName) {
         library.forEach(entry => {
@@ -371,4 +370,28 @@ function CreateFilteredList(projectName) {
     }
     filterLibrary(projectName);
 }
-CreateFilteredList('work')
+// CreateFilteredList('work')
+
+const homePage = document.querySelector('#home-page');
+homePage.addEventListener('click', () => {
+    ClearPage()
+    library.forEach(entry => {
+        CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType)
+    });
+})
+
+const homeFilter = document.querySelector('#home');
+homeFilter.addEventListener('click', () => {
+    CreateFilteredList('home')
+})
+
+const workFilter = document.querySelector('#work');
+workFilter.addEventListener('click', () => {
+    CreateFilteredList('work')
+})
+
+const studyFilter = document.querySelector('#study');
+studyFilter.addEventListener('click', () => {
+    CreateFilteredList('study')
+})
+

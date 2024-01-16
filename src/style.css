@@ -35,7 +35,7 @@ body {
     
 }
 
-.nav-menu>ul>li>a {
+.nav-menu>ul>li {
     list-style: circle;
     text-decoration: none;
     color: white;
