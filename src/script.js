@@ -284,8 +284,8 @@ function UpdateEntryFields(entryID, title, dueDate, projectType) {
     const updateTitle = document.getElementById(entryID).getElementsByClassName('to-do-title')[0]
     updateTitle.textContent = title;
 
-    const updateDate = document.getElementById(entryID).getElementsByClassName('date')[0]
-    updateDate.textContent = dueDate;
+    const updatedDate = document.getElementById(entryID).getElementsByClassName('date')[0]
+    updatedDate.textContent = new Date(dueDate).toDateString();
 }
 
 function RemoveLibraryIDs(id) {
