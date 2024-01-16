@@ -20,8 +20,8 @@ body {
 }
 
 :root {
-    --primary: rgb(49, 192, 144);
-    --secondary: #6ee7b7;
+    --primary: #6366f1;
+    --secondary: #818cf8;
 }
 
 
@@ -36,13 +36,14 @@ body {
 }
 
 .nav-menu>ul>li {
-    list-style: circle;
+    list-style: none;
     text-decoration: none;
     color: white;
     font-size: 22px;
+    letter-spacing: 2px;
+    font-weight: 500;
     
 }
-
 
 .logo {
     font-size: 30px;
@@ -56,8 +57,14 @@ body {
 .nav-menu {
     display: grid;
     grid-template-rows: repeat(9, minmax(20px, 50px));
-    letter-spacing: 1px;
+    letter-spacing: 0px;
     font-weight: 700;
+    
+}
+
+.nav-menu > ul {
+    margin: 12px;
+ 
 }
 
 /* ////////////////////////////////////////// */
@@ -157,7 +164,7 @@ input {
     border-color: var(--primary);
     border-style: solid;
     border-radius: 5px;
-    color: rgb(49, 192, 144);
+    color: var(--primary);
 }
 
 .editBtn {
@@ -327,4 +334,20 @@ input {
     margin: 20px;
     margin-left: 40px;
     margin-top: 25px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.project-list {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 400!important;
+}
+
+.colour-tag-sidebar {
+    border-radius: 5px;
+    width: 4px;
+    height: 100%;
+    position: relative;
+    right: 145px;
 }

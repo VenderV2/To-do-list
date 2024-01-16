@@ -2,6 +2,11 @@
 const library = [];
 const IDs = [];
 
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
 
 class ToDoObject {
     constructor(formTitle, formDetails, formDueDate, formProjectType) {
@@ -336,15 +341,15 @@ function DisplayCurrentDate() {
     displayedDate.textContent = GetCurrentDate()
 
 }
-
 DisplayCurrentDate()
 
 
 function createPlaceHolders() {
     CreateToDoElement('hello')     ///////PLACE HOLDERS FOR FRONT PAGE
-    const WorkplaceHolderObj = new ToDoObject('work', 'do work', '', 'work')
-    const HomeplaceHolderObj = new ToDoObject('home', 'do home', '', 'home')
-    const StudyplaceHolderObj = new ToDoObject('study', 'do study', '', 'study')
+    const date = new Date
+    const WorkplaceHolderObj = new ToDoObject('work', 'do work', date.toDateString(), 'work')
+    const HomeplaceHolderObj = new ToDoObject('home', 'do home', date.toDateString(), 'home')
+    const StudyplaceHolderObj = new ToDoObject('study', 'do study', '2024-04-23', 'study')
     
     library.push(WorkplaceHolderObj, HomeplaceHolderObj, StudyplaceHolderObj)
     console.log(library) 
@@ -370,28 +375,113 @@ function CreateFilteredList(projectName) {
     }
     filterLibrary(projectName);
 }
-// CreateFilteredList('work')
 
-const homePage = document.querySelector('#home-page');
-homePage.addEventListener('click', () => {
-    ClearPage()
-    library.forEach(entry => {
-        CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType)
+
+
+function sideColourTag() {
+    const sideBarProjects = document.querySelectorAll('.project-list')
+    sideBarProjects.forEach(element => {
+        elP = element.parentNode
+        const colourTag = document.createElement('div')
+        colourTag.classList.add('colour-tag-sidebar')
+        element.appendChild(colourTag)
+        const colourTagType = getColour(element.id)
+        colourTag.style.backgroundColor = colourTagType;
     });
-})
+}
+sideColourTag()
 
-const homeFilter = document.querySelector('#home');
-homeFilter.addEventListener('click', () => {
-    CreateFilteredList('home')
-})
+class DateFilter {
 
-const workFilter = document.querySelector('#work');
-workFilter.addEventListener('click', () => {
-    CreateFilteredList('work')
-})
+    static CreateFilteredListByToday(dueDate) {
+        ClearPage();
+    
+        function filterLibrary(dueDate) {
+            library.forEach(entry => {
+                const convertDateToDateObj = new Date(entry.dueDate).toDateString()
+                if (convertDateToDateObj == dueDate) {
+                    CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType)
+                }
+            });
+        }
+        filterLibrary(dueDate);
+    }
+    static getDatesUntil(dayString) {
+        const datesArray = [];
+        var i = 0;
+        var currentDay = new Date()
+        var currentDayInLoop = currentDay
 
-const studyFilter = document.querySelector('#study');
-studyFilter.addEventListener('click', () => {
-    CreateFilteredList('study')
-})
+        while (currentDayInLoop.toDateString().includes(dayString) != true) {
+            currentDayInLoop = currentDay.addDays(i)
+            console.log(currentDayInLoop)
+            datesArray.push(currentDayInLoop)
+            i++;
+        }
+        return datesArray;
+    }
+
+    static CreateFilteredListByWorkWeek() {
+        ClearPage();
+
+        const datesArray = DateFilter.getDatesUntil('Sat')
+        function filterLibrary() {
+            library.forEach(entry => {
+                datesArray.forEach(date => {
+                    const LibDate = new Date(entry.dueDate).toDateString()
+                    const day = date.toDateString()
+
+                    if (LibDate == day) {
+                        CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType)
+                    }
+                });
+
+
+            });
+        }
+        filterLibrary();
+    }
+
+}
+
+DateFilter.CreateFilteredListByWorkWeek()
+
+
+
+function navMenuLogic() {
+    const homePage = document.querySelector('#home-page');
+    homePage.addEventListener('click', () => {
+        ClearPage()
+        library.forEach(entry => {
+            CreateToDoElement(entry.title, entry.details, entry.dueDate, entry.projectType)
+        });
+    })
+    
+    const homeFilter = document.querySelector('#home');
+    homeFilter.addEventListener('click', () => {
+        CreateFilteredList('home')
+    })
+    
+    const workFilter = document.querySelector('#work');
+    workFilter.addEventListener('click', () => {
+        CreateFilteredList('work')
+    })
+    
+    const studyFilter = document.querySelector('#study');
+    studyFilter.addEventListener('click', () => {
+        CreateFilteredList('study')
+    })
+    
+    const todayFilter = document.querySelector('#today');
+    todayFilter.addEventListener('click', () => {
+        const today = new Date().toDateString()
+        DateFilter.CreateFilteredListByToday(today)
+    })
+
+    const weekFilter = document.querySelector('#week');
+} navMenuLogic()
+
+// const date1 = new Date
+// console.log(date1)
+
 
