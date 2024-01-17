@@ -48,7 +48,6 @@ class EditedToDoObject {
         this.dueDate = formDueDate;
         UpdateEntryFields(this.ID, this.title, this.dueDate, this.projectType)
     }
-
 }
 
 class Form {
@@ -160,7 +159,7 @@ function CreateToDoElement(objTitle, objDetails, objDueDate, objProjectType, obj
 }
 
 //creates entry input window and blurs background
-//input values are passed to a new to-do object when submit is clicked
+//input values are passed to a new to-do object whobjDen submit is clicked
 function CreateFormElement() {
     const newForm = document.createElement('div')
     newForm.classList.add('form-element')
@@ -211,10 +210,6 @@ function CreateFormElement() {
 
 
 function getIndexOfID(entryID) {
-    console.log(entryID)
-    console.log(IDs)
-    console.log(typeof(entryID))
-    console.log(typeof(IDs))
     idIndex = IDs.indexOf(entryID);
     console.log('get index of id complete')
     console.log(idIndex)
